@@ -13,6 +13,7 @@ Clone the repoistory. It contains both the server & client source code.
 ### Backend
 * [Java] Download and install the latest version of Java (link is for MacOSX)
 * Make sure to set JAVA_HOME correctly.
+
 ### Frontend
 * [NodeJS] - Download and install the latest version of NodeJS (5.6.0 at the time of writing this guide) (alternatively you can use [nvm] to do that if you already have that installed)
 * [NPM] - Download and install the latest version of NPM
