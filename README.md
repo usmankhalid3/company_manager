@@ -24,6 +24,7 @@ Clone the repoistory. It contains both the server & client source code.
 cd rest_server
 ```
 * The backend will start on port 1435 (can be modified in the server config)
+
 ### Frontend
 * Run the following commands to deploy & start the frontend server
 ``` sh
