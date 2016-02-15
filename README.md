@@ -24,7 +24,7 @@ Clone the repoistory. It contains both the server & client source code.
 ``` sh
 cd rest_server
 ```
-* The backend will start on port 1435 (can be modified in the server config)
+* The backend will start on port 1435 by default (can be modified from the server config)
 
 ### Frontend
 * Run the following commands to deploy & start the frontend server
@@ -32,17 +32,13 @@ cd rest_server
 cd angular 
 npm install
 bower install
-$ grunt serve
+grunt serve
 ```
-* The frontend will start on port 9000.
-
-```sh
-$ git clone [git-repo-url] dillinger
-$ cd dillinger
-$ npm i -d
-$ gulp build --prod
-$ NODE_ENV=production node app
+* To prepare a distribution build for heroku
+``` sh
+grunt build
 ```
+* The frontend will start on port 9000 by default.
 
 ## Testing
 
