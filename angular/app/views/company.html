@@ -1,0 +1,21 @@
+<div class="row" ng-show="dataLoaded">
+    <div class="col-md-15">
+        <h2>All Companies</h2>
+        <br/>
+        <table ng-table="tableParams" class="table table-condensed table-bordered table-striped" show-filter="false">
+            <tr ng-repeat="company in data">
+                <td title="'Name'" filter="{ name: 'text'}">{{company.name}}</td>
+                <td title="'Address'" filter="{ address: 'text'}">{{company.address}}</td>
+                <td title="'City'" filter="{ city: 'text'}">{{company.city}}</td>
+                <td title="'Country'" filter="{ country: 'text'}">{{company.country}}</td>
+                <td title="'Email'" filter="{ email: 'text'}">{{company.email}}</td>
+                <td title="'Phone'" filter="{ phone: 'text'}">{{company.phone}}</td>
+                <td title="'Actions'">
+                    <a ng-href="#/company/update/{{company.id}}">Update</a>
+                    /
+                    <a ng-click="openModal($index)">Owners</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

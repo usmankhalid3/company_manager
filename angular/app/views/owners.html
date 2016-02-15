@@ -1,0 +1,46 @@
+<div style="magin: auto; width: 90%;">
+    <div style="float:none; display:inline;">
+        <div class="ngdialog-message">
+            <h2>Owners</h2>
+        </div>
+        <a ng-show="showForm==false" ng-click="showAddOwnerForm()">Add New</a>
+
+        <br/>
+        <table ng-show="showForm==false" ng-table="tableParams" class="table table-condensed table-bordered table-striped" show-filter="false">
+            <tr ng-repeat="owner in owners">
+                <td title="'Name'" filter="{ name: 'text'}">{{owner.firstName}}</td>
+                <td title="'Address'" filter="{ address: 'text'}">{{owner.lastName}}</td>
+                <td title="'Email'" filter="{ email: 'text'}">{{owner.email}}</td>
+                <td title="'Phone'" filter="{ phone: 'text'}">{{owner.phone}}</td>
+            </tr>
+        </table>
+        <div ng-show="showForm==true">
+            <form name="form" ng-submit="addOwner()" role="form">
+                <div class="form-group" ng-class="{'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+                    <label for="firstName">First Name</label>
+                    <input type="text" name="firstName" id="firstName" class="form-control" ng-model="owner.firstName" required />
+                    <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First Name is required</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" name="lastName" id="lastName" class="form-control" ng-model="owner.lastName" required />
+                    <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last Name is required</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" ng-model="owner.email" />
+                </div>
+                <div class="form-group" ng-class="">
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" id="phone" class="form-control" ng-model="owner.phone" />
+                </div>
+                <div class="form-actions">
+                    <button type="submit" ng-click="hideOwnerForm()" ng-disabled="form.$invalid" class="btn btn-primary">Add</button>
+                    <a ng-click="hideAddOwnerForm()" class="btn btn-link">Cancel</a>
+                </div>
+                <br/>
+                <br/>
+            </form>
+        </div>
+    </div>
+</div>

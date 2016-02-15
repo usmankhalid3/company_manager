@@ -1,0 +1,40 @@
+<div class="col-md-8 col-md-offset-2">
+    <h2>Add New Company</h2>
+    <br/>
+    <form name="form" ng-submit="add()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+            <label for="name">Company Name</label>
+            <input type="text" name="name" id="name" class="form-control" ng-model="company.name" required />
+            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Company Name is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.address.$dirty && form.address.$error.required }">
+            <label for="address">Address</label>
+            <input type="text" name="address" id="address" class="form-control" ng-model="company.address" required />
+            <span ng-show="form.address.$dirty && form.address.$error.required" class="help-block">Address is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.city.$dirty && form.city.$error.required }">
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" class="form-control" ng-model="company.city" required />
+            <span ng-show="form.city.$dirty && form.city.$error.required" class="help-block">City is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.country.$dirty && form.country.$error.required }">
+            <label for="country">Country</label>
+            <input type="text" name="country" id="country" class="form-control" ng-model="company.country" required />
+            <span ng-show="form.country.$dirty && form.country.$error.required" class="help-block">Country is required</span>
+        </div>
+        <div class="form-group" ng-class="">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" class="form-control" ng-model="company.email" />
+        </div>
+		<div class="form-group" ng-class="">
+            <label for="phone">Phone</label>
+            <input type="text" name="phone" id="phone" class="form-control" ng-model="company.phone" />
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Add New</button>
+            <a href="#/" class="btn btn-link">Cancel</a>
+        </div>
+        <br/>
+        <br/>
+    </form>
+</div>
