@@ -1,1 +1,1 @@
-web: node web.js
+web: node web.js; java -jar server.jar
