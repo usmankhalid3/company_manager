@@ -1,0 +1,3 @@
+rest_server/bin
+*.DS_Store
+angular/bower_components
