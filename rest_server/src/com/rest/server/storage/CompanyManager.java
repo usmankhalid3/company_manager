@@ -105,12 +105,9 @@ public class CompanyManager extends DbManager {
 	public void delete(long companyId) throws SQLException {
 		String sql = "DELETE FROM company WHERE id=" + companyId;
 		update(sql);
-		Logger.stdOut("Deleted from company with companyId = " + companyId);
 		sql = "DELETE FROM owner WHERE id IN (SELECT owner_id FROM company_owner WHERE company_id=" + companyId + ")";
 		update(sql);
-		Logger.stdOut("Deleted from company_owner with companyId = " + companyId);
 		sql = "DELETE FROM company_owner WHERE company_id=" + companyId;
-		Logger.stdOut("Deleted from owner with companyId = " + companyId);
 		update(sql);
 	}
 }
