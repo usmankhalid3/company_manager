@@ -32,7 +32,7 @@ public class HttpMethod {
 	}
 	
 	public static boolean hasBody(String method) {
-		return isPost(method) || isPut(method) || isPatch(method);
+		return isPost(method) || isPut(method) || isPatch(method) || isDelete(method);
 	}
 	
 	public static boolean isOptions(String method) {
