@@ -1,6 +1,7 @@
 package com.rest.server.controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +17,39 @@ public class CompanyController extends BaseController {
 		String id = (String)params.get("id");
 		String resp = null;
 		if (id != null) {
-			Company company = CompanyManager.getInstance().getOne(Integer.parseInt(id));
+			Company company = null;
+			try {
+				company = CompanyManager.getInstance().getOne(Integer.parseInt(id));
+			} catch (NumberFormatException e) {
+				error("Invalid company Id");
+				return;
+			} catch (SQLException e) {
+				error("Could not fetch company with id = " + id);
+				return;
+			}
 			if (company != null) {
 				resp = company.toJson();
 			}
 			else {
-				error("GET VALUE Cannot find company");
+				error("Could not fetch company with id = " + id);
+				return;
 			}
 		}
 		else {
-			List<Company> companies = CompanyManager.getInstance().getAll();
-			resp = BaseModel.gson.toJson(companies);
+			List<Company> companies = null;
+			try {
+				companies = CompanyManager.getInstance().getAll(-1);
+			} catch (SQLException e) {
+				error("Could not fetch the company list");
+				return;
+			}
+			if (companies != null) {
+				resp = BaseModel.gson.toJson(companies);
+			}
+			else {
+				error("Could not fetch the list of companies");
+				return;
+			}
 		}
 		success(resp);
 	}
@@ -35,15 +58,25 @@ public class CompanyController extends BaseController {
 	public void handlePOST(Map<String, Object> params) throws IOException {
 		String json = (String)params.get("company");
 		Company company = Company.fromJson(json, Company.class);
-		CompanyManager.getInstance().add(company);
-		success(company.toJson());
+		try {
+			CompanyManager.getInstance().add(company);
+			success(company.toJson());
+		} catch (SQLException e) {
+			error("Could not create a new company");
+			return;
+		}
 	}
 
 	@Override
 	public void handlePUT(Map<String, Object> params) throws IOException {
 		String json = (String)params.get("company");
 		Company company = Company.fromJson(json, Company.class);
-		CompanyManager.getInstance().update(company);
+		try {
+			CompanyManager.getInstance().update(company);
+		} catch (SQLException e) {
+			error("Could not update company with id = " + company.getId());
+			return;
+		}
 		success(company.toJson());
 	}
 
@@ -52,7 +85,15 @@ public class CompanyController extends BaseController {
 		String companyId = (String)params.get("companyId");
 		String json = (String)params.get("owner");
 		Owner owner = Owner.fromJson(json, Owner.class);
-		CompanyManager.getInstance().addOwner(Integer.parseInt(companyId), owner);
+		try {
+			CompanyManager.getInstance().addOwner(Integer.parseInt(companyId), owner);
+		} catch (NumberFormatException e) {
+			error("Invalid company Id");
+			return;
+		} catch (SQLException e) {
+			error("Could not create a new owner");
+			return;
+		}
 		success(owner.toJson());	
 	}
 }

@@ -33,7 +33,6 @@ public class Owner extends BaseModel {
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
 		return result;
@@ -83,4 +82,21 @@ public class Owner extends BaseModel {
 		this.email = email;
 	}
 	
+	public String getInsert() {
+		String sql = "INSERT INTO owner(first_name,last_name,email,phone,created_ts,updated_ts) VALUES (";
+		sql += "\"" + firstName + "\",";
+		sql += "\"" + lastName + "\",";
+		sql += "\"" + email + "\",";
+		sql += "\"" + phone + "\",";
+		sql += System.currentTimeMillis() + ",";
+		sql += System.currentTimeMillis();
+		sql += ")";
+		return sql;
+	}
+	@Override
+	public String getUpdate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -6,32 +6,36 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.rest.server.util.Logger;
 
 abstract public class DbManager {
 	
 	private Integer id = 0;
 	private Connection connection;
-	private String dbPath = "db/server";
-	private String defaultUser = "sa";
-	private String defaultPassword = "";
+	private String dbName = "db/server";
 	
 	public void connect() {
-		connect(dbPath, defaultUser, defaultPassword);
+		connect(dbName);
 	}
 	
-	public void connect(String path, String user, String pwd) {
-        // connect to the database.
-		System.out.println("Attempting to connect to the database...");
+	public void connect(String name) {
         try {
-            // Load the HSQL Database Engine JDBC driver
-            Class.forName("org.hsqldb.jdbcDriver");
-			connection = DriverManager.getConnection("jdbc:hsqldb:file/" + path, user, pwd);
-			System.out.println("Connection established...");
-			query("SELECT current_timestamp FROM COMPANY");
+            // Load the SQLITE Database Engine JDBC driver
+        	Class.forName("org.sqlite.JDBC");
+            // connect to the database.
+        	Logger.stdOut("Attempting to connect to the database...");
+			connection = DriverManager.getConnection("jdbc:sqlite:" + name);
+			connection.setAutoCommit(true);
+			Logger.stdOut("Connection established...");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.stdErr(e.getMessage());
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			Logger.stdErr(e.getMessage());
 		}
 	}
 	
@@ -47,7 +51,7 @@ abstract public class DbManager {
     }
     
   //use for SQL command SELECT
-    public synchronized void query(String expression) throws SQLException {
+    public synchronized List<Map<Integer, Object>> query(String expression) throws SQLException {
 
         Statement st = null;
         ResultSet rs = null;
@@ -58,8 +62,8 @@ abstract public class DbManager {
         // choose to make a new one each time
         rs = st.executeQuery(expression);    // run the query
 
-        // do something with the result set.
-        dump(rs);
+        List<Map<Integer, Object>> data = getDataFromResultSet(rs);
+        
         st.close();    // NOTE!! if you close a statement the associated ResultSet is
 
         // closed too
@@ -67,10 +71,12 @@ abstract public class DbManager {
         // the result set is invalidated also  if you recycle an Statement
         // and try to execute some other query before the result set has been
         // completely examined.
+        
+        return data;
     }
 
   //use for SQL commands CREATE, DROP, INSERT and UPDATE
-    public synchronized void update(String expression) throws SQLException {
+    public synchronized long update(String expression) throws SQLException {
 
         Statement st = null;
 
@@ -78,11 +84,18 @@ abstract public class DbManager {
 
         int i = st.executeUpdate(expression);    // run the query
 
+        ResultSet generatedKeys = st.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            return generatedKeys.getLong(1);
+        }
+
         if (i == -1) {
-            System.out.println("db error : " + expression);
+        	Logger.stdErr("could not execute update: " + expression);
         }
 
         st.close();
+        
+        return i;
     }    // void update()
 
     public static void dump(ResultSet rs) throws SQLException {
@@ -107,8 +120,27 @@ abstract public class DbManager {
                 System.out.print(o.toString() + " ");
             }
 
-            System.out.println(" ");
+            Logger.stdOut(" ");
         }
+    }
+    
+    private List<Map<Integer, Object>> getDataFromResultSet(ResultSet rs) throws SQLException {
+    	List<Map<Integer, Object>> result = new ArrayList<Map<Integer, Object>>();
+    	ResultSetMetaData meta   = rs.getMetaData();
+    	int colmax = meta.getColumnCount();
+    	int i;
+    	Object o = null;
+        while (rs.next()) {
+        	Map<Integer, Object> cols = new HashMap<Integer, Object>();
+        	result.add(cols);
+            for (i = 0; i < colmax; ++i) {
+                o = rs.getObject(i + 1);    // Is SQL the first column is indexed
+                if (o != null) {
+                	cols.put(i, o);
+                }
+            }
+        }
+    	return result;
     }
     
     protected Integer getNextId() {

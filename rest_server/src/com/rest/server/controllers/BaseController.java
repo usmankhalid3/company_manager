@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.rest.server.core.HttpMethod;
 import com.rest.server.core.HttpProtocol;
+import com.rest.server.core.Response;
 import com.rest.server.util.HttpStatusCode;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -40,25 +41,29 @@ public abstract class BaseController implements HttpProtocol {
 	}
 	
 	protected void success(String resp) throws IOException {
+		success(new Response(HttpStatusCode.OK, resp));
+	}
+	
+	protected void success(Response resp) throws IOException {
 		writeResponse(resp);
 	}
 	
 	protected void error(String resp) throws IOException {
-		error(HttpStatusCode.SERVER_ERROR, resp);
+		error(new Response(HttpStatusCode.SERVER_ERROR, resp));
 	}
 	
-	protected void error(int errorCode, String resp) throws IOException {
-		exchange.get().sendResponseHeaders(errorCode, resp.getBytes().length);
+	protected void error(Response resp) throws IOException {
 		writeResponse(resp);
 	}
 	
-	private void writeResponse(String text) throws IOException {
+	private void writeResponse(Response resp) throws IOException {
 		Headers headers = exchange.get().getResponseHeaders();
 		headers.set("Content-Type", "text/json");
 		headers.set("Access-Control-Allow-Headers:", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 		headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, OPTIONS");
 		headers.set("Access-Control-Allow-Origin", "*");
-		exchange.get().sendResponseHeaders(HttpStatusCode.OK, text.getBytes().length);		
+		String text = resp.getData();
+		exchange.get().sendResponseHeaders(resp.getStatusCode(), text.getBytes().length);		
 		if (text != null) {
 			OutputStream os = exchange.get().getResponseBody();
 			os.write(text.getBytes());

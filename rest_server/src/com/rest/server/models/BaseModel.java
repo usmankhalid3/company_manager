@@ -3,9 +3,9 @@ package com.rest.server.models;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-abstract public class BaseModel {
+abstract public class BaseModel implements Model {
 	
-	protected int id;
+	protected long id;
 	protected String createdAt;
 	protected String updatedAt;
 	public static Gson gson = new GsonBuilder().create();
@@ -18,10 +18,10 @@ abstract public class BaseModel {
 		return gson.fromJson(json, c);
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getCreatedAt() {

@@ -71,7 +71,6 @@ public class Company extends BaseModel {
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((owners == null) ? 0 : owners.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
@@ -135,5 +134,32 @@ public class Company extends BaseModel {
 		} else if (!updatedAt.equals(other.updatedAt))
 			return false;
 		return true;
+	}
+	
+	public String getInsert() {
+		String sql = "INSERT INTO company(name,address,city,country,email,phone,created_ts,updated_ts) VALUES (";
+		sql += "\"" + name + "\",";
+		sql += "\"" + address + "\",";
+		sql += "\"" + city + "\",";
+		sql += "\"" + country + "\",";
+		sql += "\"" + email + "\",";
+		sql += "\"" + phone + "\",";
+		sql += System.currentTimeMillis() + ",";
+		sql += System.currentTimeMillis();
+		sql += ")";
+		return sql;
+	}
+	@Override
+	public String getUpdate() {
+		String sql = "UPDATE company SET ";
+		sql += "name=\"" + name + "\",";
+		sql += "address=\"" + address + "\",";
+		sql += "city=\"" + city + "\",";
+		sql += "country=\"" + country + "\",";
+		sql += "email=\"" + email + "\",";
+		sql += "phone=\"" + phone + "\",";
+		sql += "updated_ts=" + System.currentTimeMillis();
+		sql += " WHERE id=" + id;
+		return sql;
 	}
 }
