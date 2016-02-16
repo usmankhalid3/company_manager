@@ -23,7 +23,7 @@ http://ec2-54-200-129-123.us-west-2.compute.amazonaws.com:1435
 Clone the repoistory. It contains both the server & client source code.
 
 ### Backend
-* [Java] Download and install the latest version of Java (link is for MacOSX)
+* [Java] - Download and install the latest version of Java (link is for MacOSX)
 * Make sure to set JAVA_HOME correctly.
 
 ### Frontend
@@ -35,6 +35,7 @@ Clone the repoistory. It contains both the server & client source code.
 * cd into the backend directory
 ``` sh
 cd rest_server
+./start-server.sh
 ```
 * The backend will start on port 1435 by default (can be modified in the server config)
 
