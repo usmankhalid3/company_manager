@@ -10,10 +10,7 @@
 angular.module('companyManagerApp')
   .controller('DeletecompanyCtrl', function (SERVER_URL, $http, $routeParams, $window) {
   	var companyId = $routeParams.companyId;
-  	var data = {
-  		id: companyId
-  	}
-	$http.delete(SERVER_URL, data)
+	$http.delete(SERVER_URL + "/company?id=" + companyId)
   		.success(function(response) {
   			$window.location.href = "/";
   		})
