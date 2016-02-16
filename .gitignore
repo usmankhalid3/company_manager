@@ -1,4 +1,4 @@
 rest_server/bin
 *.DS_Store
 angular/bower_components
-rest_server/db/server
+rest_server/db

@@ -12,11 +12,9 @@ angular.module('companyManagerApp')
   	var companyId = $routeParams.companyId;
 	$http.delete(SERVER_URL + "/company?id=" + companyId)
   		.success(function(response) {
-  			$scope.dataLoading = false;
   			$window.location.href = "/";
   		})
   		.error(function(response) {
-  			$scope.dataLoading = false;
+  			alert("Could not delete company with id = " + companyId);
   		});
-    $window.location.href = "/";
   });
