@@ -7,6 +7,18 @@ This guide contains the deployment instructions and the commands to test various
 ## Version
 0.0.1
 
+## Services
+
+The frontend & backend services are available on the following links:
+- Frontend
+``` sh
+http://ec2-54-200-129-123.us-west-2.compute.amazonaws.com/#/
+```
+- Backend
+``` sh
+http://ec2-54-200-129-123.us-west-2.compute.amazonaws.com:1435
+```
+
 ## Installation
 Clone the repoistory. It contains both the server & client source code.
 
@@ -24,24 +36,25 @@ Clone the repoistory. It contains both the server & client source code.
 ``` sh
 cd rest_server
 ```
-* The backend will start on port 1435 (can be modified in the server config)
+* The backend will start on port 1435 by default (can be modified in the server config)
 
 ### Frontend
-* Run the following commands to deploy & start the frontend server
+* Run the following commands to prepare the frontend server
 ``` sh
 cd angular 
 npm install
+npm install grunt grunt-cli express morgan forever -g --save
 bower install
-$ grunt serve
 ```
-* The frontend will start on port 9000.
+* Run the following command to run the frontend server in dev mode (port 9000 by default)
+``` sh
+grunt serve
+```
 
-```sh
-$ git clone [git-repo-url] dillinger
-$ cd dillinger
-$ npm i -d
-$ gulp build --prod
-$ NODE_ENV=production node app
+* To run the frontend server in prod mode, we wil use nginx as the webserver. Assuming that you have installed nginx and setup its config to correctly point to the dist/ folder
+``` sh
+grunt build
+service nginx restart
 ```
 
 ## Testing
