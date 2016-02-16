@@ -102,6 +102,7 @@ public class CompanyController extends BaseController {
 		String companyId = (String)params.get("id");
 		try {
 			CompanyManager.getInstance().delete(Long.parseLong(companyId));
+			success("{\"id\":" + companyId + "}");
 		} catch (NumberFormatException e) {
 			error("Invalid company Id");
 		} catch (SQLException e) {
