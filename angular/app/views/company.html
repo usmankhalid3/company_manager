@@ -10,10 +10,10 @@
                 <td title="'Country'" filter="{ country: 'text'}">{{company.country}}</td>
                 <td title="'Email'" filter="{ email: 'text'}">{{company.email}}</td>
                 <td title="'Phone'" filter="{ phone: 'text'}">{{company.phone}}</td>
-                <td title="'Actions'">
-                    <a ng-href="#/company/update/{{company.id}}">Update</a>
-                    /
-                    <a ng-click="openModal($index)">Owners</a>
+                <td title="'Actions'" style="text-align:center;">
+                    <a ng-href="#/company/update/{{company.id}}"><img ng-src="images/edit.png" width="30" height="30"/></a>
+                    <a ng-href="#/company/delete/{{company.id}}"><img ng-src="images/delete.png" width="30" height="30"/></a>
+                    <a ng-click="openModal($index)" style="cursor:pointer;"><img ng-src="images/owners.png" width="30" height="30"/></a>
                 </td>
             </tr>
         </table>

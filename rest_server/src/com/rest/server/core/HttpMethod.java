@@ -7,6 +7,7 @@ public class HttpMethod {
 		POST,
 		PUT,
 		PATCH,
+		DELETE,
 		OPTIONS
 	}
 	
@@ -24,6 +25,10 @@ public class HttpMethod {
 	
 	public static boolean isPatch(String method) {
 		return check(method, Method.PATCH);
+	}
+	
+	public static boolean isDelete(String method) {
+		return check(method, Method.DELETE);
 	}
 	
 	public static boolean hasBody(String method) {

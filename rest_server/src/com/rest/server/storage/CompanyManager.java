@@ -100,4 +100,9 @@ public class CompanyManager extends DbManager {
 		update(sql);
 		return owner;
 	}
+	
+	public void delete(long companyId) throws SQLException {
+		String sql = "DELETE FROM company WHERE id=" + companyId;
+		update(sql);
+	}
 }

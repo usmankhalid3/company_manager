@@ -32,6 +32,9 @@ public abstract class BaseController implements HttpProtocol {
 		else if (HttpMethod.isPatch(method)) {
 			handlePATCH(params);
 		}
+		else if (HttpMethod.isDelete(method)) {
+			handleDELETE(params);
+		}
 		else if (HttpMethod.isOptions(method)) {
 			success("OK");
 		}
@@ -60,7 +63,7 @@ public abstract class BaseController implements HttpProtocol {
 		Headers headers = exchange.get().getResponseHeaders();
 		headers.set("Content-Type", "text/json");
 		headers.set("Access-Control-Allow-Headers:", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-		headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, OPTIONS");
+		headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
 		headers.set("Access-Control-Allow-Origin", "*");
 		String text = resp.getData();
 		exchange.get().sendResponseHeaders(resp.getStatusCode(), text.getBytes().length);		

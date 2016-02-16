@@ -82,11 +82,16 @@ angular
         controller: 'UpdatecompanyCtrl',
         controllerAs: 'updateCompany'
       })
+      .when('/company/delete/:companyId', {
+        template: '',
+        controller: 'DeletecompanyCtrl',
+      })
       .otherwise({
         redirectTo: '/'
       });
   })
-  .constant('SERVER_URL', 'http://ec2-54-200-129-123.us-west-2.compute.amazonaws.com:1435')
+  //.constant('SERVER_URL', 'http://ec2-54-200-129-123.us-west-2.compute.amazonaws.com:1435')
+  .constant('SERVER_URL', 'http://localhost:1435')
   .run(configureDefaults);
 
   configureDefaults.$inject = ["ngTableDefaults"];

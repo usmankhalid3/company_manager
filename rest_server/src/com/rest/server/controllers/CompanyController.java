@@ -96,4 +96,16 @@ public class CompanyController extends BaseController {
 		}
 		success(owner.toJson());	
 	}
+
+	@Override
+	public void handleDELETE(Map<String, Object> params) throws IOException {
+		String companyId = (String)params.get("id");
+		try {
+			CompanyManager.getInstance().delete(Long.parseLong(companyId));
+		} catch (NumberFormatException e) {
+			error("Invalid company Id");
+		} catch (SQLException e) {
+			error("Could not delete the company with id = " + companyId);
+		}
+	}
 }

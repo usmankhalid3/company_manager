@@ -9,4 +9,5 @@ public interface HttpProtocol {
 	public void handlePOST(Map<String, Object> params) throws IOException;
 	public void handlePUT(Map<String, Object> params) throws IOException;
 	public void handlePATCH(Map<String, Object> params) throws IOException;
+	public void handleDELETE(Map<String, Object> params) throws IOException;
 }

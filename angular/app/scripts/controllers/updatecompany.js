@@ -11,7 +11,7 @@ angular.module('companyManagerApp')
   .controller('UpdatecompanyCtrl', function ($scope, $http, $routeParams, $window, SERVER_URL) {
     $scope.company = {loaded: false};
     $scope.dataLoading = true;
-    $http.get("http://localhost:1435/company?id=" + $routeParams.companyId)
+    $http.get(SERVER_URL + "/company?id=" + $routeParams.companyId)
     	.success(function(response){
     		$scope.dataLoading = false;
     		$scope.company = response;
